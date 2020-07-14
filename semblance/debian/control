@@ -1,0 +1,15 @@
+Source: semblance
+Section: devel
+Priority: optional
+Maintainer: TK Chia <tkchia@users.noreply.github.com>
+Build-Depends: debhelper (>= 9), quilt, gcc (>= 4.5), libc6-dev (>= 2),
+ autoconf
+Standards-Version: 3.9.6
+Homepage: https://github.com/zfigura/semblance
+
+Package: semblance
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Disassembler for MS-DOS and Windows executables.
+ Disassembler for MS-DOS and Windows executables. Supports 16-bit NE (New
+ Executable), MZ (DOS), and PE (Portable Executable, i.e. Win32) files. 

@@ -1,0 +1,11 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: unexepack
+Source: <https://sourceforge.net/p/openkb/code/>
+
+Files: *
+Copyright: Not applicable.
+License: public-domain
+ To the extent possible under law, Vitaly Driedfruit has waived all copyright
+ and related or neighboring rights to UNEXEPACK.
+ .
+ See http://creativecommons.org/publicdomain/zero/1.0/

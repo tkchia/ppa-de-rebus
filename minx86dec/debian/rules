@@ -1,0 +1,50 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+ifneq "" "$(wildcard minx86dec-src/Makefile)"
+    SRCDIR ?= $(abspath minx86dec-src)
+    COPY_DOCS ?= true
+else
+    SRCDIR ?= $(abspath .)
+    COPY_DOCS ?= false
+endif
+DESTDIR ?= $(abspath debian/minx86dec)
+PREFIX ?= /usr
+
+%:
+	exec dh $@
+
+override_dh_auto_clean:
+	if [ -d build ]; then \
+		cd build && \
+		    make VPATH='$(SRCDIR)' -f '$(SRCDIR)'/Makefile clean; \
+	fi
+
+override_dh_auto_configure:
+	# Take this chance to copy out the documentation files...
+	if $(COPY_DOCS); then \
+		cp -a '$(SRCDIR)'/README '$(SRCDIR)'/LICENSE '$(SRCDIR)'/TODO \
+		      .; \
+	fi
+
+override_dh_auto_build:
+	mkdir -p build
+	ln -s '$(SRCDIR)' build/minx86dec
+	cd build && \
+	make VPATH='$(SRCDIR)' -f '$(SRCDIR)'/Makefile
+	$(RM) build/libminx86dec.a
+	cd build && \
+	$(AR) cqs libminx86dec.a string.o core*.o encoreall.o iit387.o
+
+override_dh_auto_test:
+	# Well, the build itself does do a quick test (`make test-headers'). 
+	# It is not very complete, though.
+
+override_dh_auto_install:
+	install -d -m 755 '$(DESTDIR)$(PREFIX)'/lib \
+			  '$(DESTDIR)$(PREFIX)'/include/minx86dec
+	cd build && \
+	install -c -m 644 libminx86dec.a '$(DESTDIR)$(PREFIX)'/lib/
+	cd build && \
+	install -c -m 644 minx86dec/*.h \
+			  '$(DESTDIR)$(PREFIX)'/include/minx86dec/

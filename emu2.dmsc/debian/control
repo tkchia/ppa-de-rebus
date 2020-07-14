@@ -1,0 +1,13 @@
+Source: emu2.dmsc
+Section: devel
+Priority: optional
+Maintainer: TK Chia <tkchia@users.noreply.github.com>
+Build-Depends: debhelper (>= 9), quilt, gcc (>= 4.5), libc6-dev (>= 2)
+Standards-Version: 3.9.6
+Homepage: https://github.com/dmsc/emu2
+
+Package: emu2.dmsc
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Simple x86 and DOS emulator for the Linux terminal
+ Simple x86 and DOS emulator for the Linux terminal, by Daniel Serpell.

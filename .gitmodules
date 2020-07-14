@@ -1,0 +1,12 @@
+[submodule "emu2/emu2-src"]
+	path = emu2.dmsc/emu2-src
+	url = https://github.com/dmsc/emu2.git
+[submodule "minx86dec/minx86dec-src"]
+	path = minx86dec/minx86dec-src
+	url = https://github.com/joncampbell123/minx86dec.git
+[submodule "semblance/semblance-src"]
+	path = semblance/semblance-src
+	url = https://github.com/zfigura/semblance.git
+[submodule "emu2.dmsc/emu2-src"]
+	path = emu2.dmsc/emu2-src
+	url = https://github.com/dmsc/emu2.git

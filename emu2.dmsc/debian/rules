@@ -1,0 +1,39 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+ifneq "" "$(wildcard emu2-src/Makefile)"
+    SRCDIR ?= $(abspath emu2-src)
+    COPY_DOCS ?= true
+else
+    SRCDIR ?= $(abspath .)
+    COPY_DOCS ?= false
+endif
+DESTDIR ?= $(abspath debian/emu2.dmsc)
+
+%:
+	exec dh $@
+
+override_dh_auto_clean:
+	if [ -d build ]; then \
+		cd build && \
+		    mkdir -p obj && \
+		    make VPATH='$(SRCDIR)' -f '$(SRCDIR)'/Makefile clean; \
+	fi
+
+override_dh_auto_configure:
+	# Take this chance to copy out the documentation files...
+	if $(COPY_DOCS); \
+		then cp -a '$(SRCDIR)'/README.md '$(SRCDIR)'/LICENSE .; fi
+
+override_dh_auto_build:
+	mkdir -p build
+	cd build && \
+	make VPATH='$(SRCDIR)' -f '$(SRCDIR)'/Makefile
+
+override_dh_auto_test:
+	# Unimplemented.
+
+override_dh_auto_install:
+	cd build && \
+	    make VPATH='$(SRCDIR)' DESTDIR='$(DESTDIR)' \
+		-f '$(SRCDIR)'/Makefile install

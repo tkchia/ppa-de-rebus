@@ -1,0 +1,14 @@
+Source: unexepack.openkb
+Section: devel
+Priority: optional
+Maintainer: TK Chia <tkchia@users.noreply.github.com>
+Build-Depends: debhelper (>= 9), quilt, gcc (>= 4.5), libc6-dev (>= 2)
+Standards-Version: 3.9.6
+Homepage: http://openkb.sourceforge.net/
+
+Package: unexepack.openkb
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Unpacker for MS-DOS .exe files packed with Microsoft EXEPACK
+ Unpacker for MS-DOS .exe files packed with Microsoft EXEPACK, from the
+ openKB project, by Vitaly Driedfruit.

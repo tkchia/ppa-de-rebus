@@ -1,0 +1,14 @@
+Source: minx86dec
+Section: devel
+Priority: optional
+Maintainer: TK Chia <tkchia@users.noreply.github.com>
+Build-Depends: debhelper (>= 9), quilt, gcc (>= 4.5), libc6-dev (>= 2),
+ nasm (>= 2)
+Standards-Version: 3.9.6
+Homepage: https://github.com/joncampbell123/minx86dec
+
+Package: minx86dec
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Minimalist 80x86 decompiler library
+ Minimalist 80x86 decompiler library, by Jonathan Campbell and others.

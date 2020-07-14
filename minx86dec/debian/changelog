@@ -1,0 +1,11 @@
+minx86dec (20200215-build20200714-1) focal; urgency=medium
+
+  * Update maintainer address.
+
+ -- user <user@localhost.localdomain>  Tue, 14 Jul 2020 07:01:29 +0000
+
+minx86dec (20200215-build20200702-2) focal; urgency=medium
+
+  * Release.
+
+ -- user <user@localhost.localdomain>  Fri, 03 Jul 2020 13:54:55 +0000

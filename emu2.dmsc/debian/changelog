@@ -1,0 +1,17 @@
+emu2.dmsc (20200604-build20200714-2) focal; urgency=medium
+
+  * Corrected copyright information for debian/* packaging files.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Tue, 14 Jul 2020 06:45:37 +0000
+
+emu2.dmsc (20200604-build20200703-1) focal; urgency=medium
+
+  * Tweaked packaging process to include documentation files.
+
+ -- user <user@localhost.localdomain>  Fri, 03 Jul 2020 14:18:15 +0000
+
+emu2.dmsc (20200604-build20200614-2) focal; urgency=medium
+
+  * Release.
+
+ -- user <user@localhost.localdomain>  Sun, 14 Jun 2020 11:06:49 +0000

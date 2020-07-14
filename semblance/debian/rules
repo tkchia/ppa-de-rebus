@@ -1,0 +1,35 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+ifneq "" "$(wildcard semblance-src/Makefile.am)"
+    SRCDIR ?= $(abspath semblance-src)
+    COPY_DOCS ?= true
+else
+    SRCDIR ?= $(abspath .)
+    COPY_DOCS ?= false
+endif
+DESTDIR ?= $(abspath debian/semblance)
+
+%:
+	exec dh $@
+
+override_dh_auto_clean:
+	$(RM) -r build
+
+override_dh_auto_configure:
+	mkdir -p build
+	cd '$(SRCDIR)' && ./autogen.sh
+	cd build && '$(SRCDIR)'/configure
+	# Take this chance to copy out the documentation files...
+	if $(COPY_DOCS); \
+		then cp -a '$(SRCDIR)'/README '$(SRCDIR)'/LICENSE .; fi
+
+override_dh_auto_build:
+	cd build && $(MAKE)
+
+override_dh_auto_test:
+	# Unimplemented.
+
+override_dh_auto_install:
+	install -d -m 755 '$(DESTDIR)'/usr/bin
+	install -c -m 755 build/dump '$(DESTDIR)'/usr/bin/dump.semblance

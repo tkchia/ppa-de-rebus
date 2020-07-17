@@ -1,3 +1,9 @@
+minx86dec (20200215-build20200717-1) focal; urgency=medium
+
+  * Corrected copyright information for debian/* packaging files.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Fri, 17 Jul 2020 12:54:59 +0000
+
 minx86dec (20200215-build20200714-1) focal; urgency=medium
 
   * Update maintainer address.

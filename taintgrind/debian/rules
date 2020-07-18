@@ -1,0 +1,68 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+DOCS = README.md LICENSE log2dot.py
+TGDIR ?= $(abspath taintgrind-src)
+CSDIR ?= $(abspath capstone-src)
+DESTDIR ?= $(abspath debian/taintgrind)
+# The Taintgrind sources assume that they are just below a Valgrind source
+# tree.  So I arrange to move the Taintgrind code into the Valgrind tree
+# before building it.
+#
+# The Capstone sources on the other hand need to be moved into the (final)
+# Taintgrind tree.
+VGDIR ?= $(abspath valgrind-src)
+NTGDIR ?= $(VGDIR)/taintgrind
+NCSDIR ?= $(NTGDIR)/capstone-3.0.4
+
+MULTIARCH := $(shell $(CC) -print-multiarch)
+
+%:
+	exec dh $@
+
+override_dh_auto_configure:
+	# Move the Capstone & Taintgrind source directories to where they
+	# should be.
+	mv '$(TGDIR)' '$(NTGDIR)'
+	mv '$(CSDIR)' '$(NCSDIR)'
+	# We need to configure the Valgrind source tree to get the
+	# link_exe_tool_linux script that Taintgrind needs, & the flags in
+	# the generated Valgrind makefile that Capstone needs.
+	cd '$(VGDIR)' && ./autogen.sh
+	cd '$(VGDIR)' && ./configure
+	# Configure & patch Capstone.  Create a directory under the Valgrind
+	# tree to keep the scripts happy.
+	mkdir -p '$(VGDIR)'/include/valgrind
+	cd '$(NTGDIR)' && $(SHELL) configure_capstone.sh '$(VGDIR)'
+	# Now configure Taintgrind itself.
+	cd '$(NTGDIR)' && ../autogen.sh
+	cd '$(NTGDIR)' && \
+	    CC="$(CC) -I/usr/include/valgrind" \
+	    CFLAGS="$(patsubst -fstack-protector%,-fno-stack-protector, \
+			$(CFLAGS))" \
+	    ./configure --prefix=/usr --libdir=/usr/lib/'$(MULTIARCH)'
+	# Take this chance to copy out the documentation files...
+	cp -a $(DOCS:%='$(NTGDIR)'/%) .
+
+override_dh_auto_build:
+	# The Taintgrind code assumes that Valgrind has been built in the
+	# directory tree just above itself.  We avoid an expensive Valgrind
+	# rebuild, & just symlink to some needed library files in the
+	# Valgrind installation under /usr/lib.
+	ln -s /usr/lib/'$(MULTIARCH)'/valgrind/*.a '$(VGDIR)'/coregrind/
+	ln -s /usr/lib/'$(MULTIARCH)'/valgrind/libvex-*.a '$(VGDIR)'/VEX/
+	# Build Capstone.
+	cd '$(NCSDIR)' && \
+	    CC="$(CC) -I/usr/include/valgrind" $(SHELL) make_capstone.sh
+	# Build Taintgrind.
+	$(MAKE) -C '$(NTGDIR)'
+
+override_dh_auto_test:
+	$(MAKE) -C '$(NTGDIR)' check
+
+override_dh_strip:
+	# "Don't strip symbols from lib/valgrind/* in the installation tree.
+	#  Doing so will likely cause problems."  -- Valgrind documentation
+
+override_dh_auto_install:
+	$(MAKE) -C '$(NTGDIR)' DESTDIR='$(DESTDIR)' install

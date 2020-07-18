@@ -10,3 +10,14 @@
 [submodule "emu2.dmsc/emu2-src"]
 	path = emu2.dmsc/emu2-src
 	url = https://github.com/dmsc/emu2.git
+[submodule "taintgrind/taintgrind-src"]
+	path = taintgrind/taintgrind-src
+	url = https://github.com/wmkhoo/taintgrind.git
+[submodule "taintgrind/valgrind-src"]
+	path = taintgrind/valgrind-src
+	url = https://sourceware.org/git/valgrind.git
+	branch = VALGRIND_3_16_BRANCH
+[submodule "taintgrind/capstone-src"]
+	path = taintgrind/capstone-src
+	url = https://github.com/aquynh/capstone.git
+	branch = v3

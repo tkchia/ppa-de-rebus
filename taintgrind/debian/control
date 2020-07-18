@@ -1,0 +1,17 @@
+Source: taintgrind
+Section: devel
+Priority: optional
+Maintainer: TK Chia <tkchia@users.noreply.github.com>
+Build-Depends: debhelper (>= 9), quilt, gcc (>= 4.5), libc6-dev (>= 2),
+ autoconf, valgrind (>= 1:3.15.0), valgrind (<< 1:3.16.0)
+Standards-Version: 3.9.6
+Homepage: https://github.com/wmkhoo/taintgrind
+
+Package: taintgrind
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, valgrind (>= 1:3.15.0),
+ valgrind (<< 1:3.16.0)
+Suggests: graphviz
+Description: Valgrind taint analysis tool.
+ A taint-tracking plugin for the Valgrind memory checking tool, by
+ Wei Ming Khoo.

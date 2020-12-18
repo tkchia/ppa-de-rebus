@@ -1,0 +1,38 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+ifneq "" "$(wildcard j6-uefi-headers-src/generate.py)"
+    SRCDIR ?= $(abspath j6-uefi-headers-src)
+    COPY_DOCS ?= true
+else
+    SRCDIR ?= $(abspath .)
+    COPY_DOCS ?= false
+endif
+DESTDIR ?= $(abspath debian/j6-uefi-headers)
+PREFIX ?= /usr
+
+%:
+	exec dh $@
+
+override_dh_auto_clean:
+	$(RM) -r '$(SRCDIR)'/uefi/protos '$(SRCDIR)'/tags
+
+override_dh_auto_configure:
+	# Take this chance to copy out the documentation files...
+	if $(COPY_DOCS); \
+		then cp -a '$(SRCDIR)'/README.md '$(SRCDIR)'/LICENSE.md .; fi
+	# ...and patch things up...
+	cd '$(SRCDIR)' && QUILT_PATCHES='$(abspath debian/patches)' quilt push
+
+override_dh_auto_build:
+	cd '$(SRCDIR)' && ./generate.py
+
+override_dh_auto_test:
+	# Unimplemented.
+
+override_dh_auto_install:
+	install -d -m 0755 '$(DESTDIR)$(PREFIX)'/include/uefi/protos
+	install -c -m 0644 '$(SRCDIR)'/uefi/*.h '$(SRCDIR)'/uefi/*.inc \
+	    '$(DESTDIR)$(PREFIX)'/include/uefi
+	install -c -m 0644 '$(SRCDIR)'/uefi/protos/*.h \
+	    '$(DESTDIR)$(PREFIX)'/include/uefi/protos

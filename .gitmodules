@@ -21,3 +21,6 @@
 	path = taintgrind/capstone-src
 	url = https://github.com/aquynh/capstone.git
 	branch = v3
+[submodule "j6-uefi-headers/j6-uefi-headers-src"]
+	path = j6-uefi-headers/j6-uefi-headers-src
+	url = https://github.com/justinian/j6-uefi-headers.git

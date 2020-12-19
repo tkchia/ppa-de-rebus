@@ -9,7 +9,7 @@ else
     COPY_DOCS ?= false
 endif
 DESTDIR ?= $(abspath debian/j6-uefi-headers)
-PREFIX ?= /usr
+PREFIX ?= /usr/x86_64-w64-mingw32
 
 %:
 	exec dh $@
@@ -21,8 +21,6 @@ override_dh_auto_configure:
 	# Take this chance to copy out the documentation files...
 	if $(COPY_DOCS); \
 		then cp -a '$(SRCDIR)'/README.md '$(SRCDIR)'/LICENSE.md .; fi
-	# ...and patch things up...
-	cd '$(SRCDIR)' && QUILT_PATCHES='$(abspath debian/patches)' quilt push
 
 override_dh_auto_build:
 	cd '$(SRCDIR)' && ./generate.py

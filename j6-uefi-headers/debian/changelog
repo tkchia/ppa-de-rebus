@@ -1,3 +1,11 @@
+j6-uefi-headers (20200525-build20201219-3) focal; urgency=medium
+
+  * Bump sources to newer version.
+  * Install headers in directory for MinGW header files, rather than host
+    /usr/include/ directory.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Fri, 19 Dec 2020 06:30:31 +0000
+
 j6-uefi-headers (20200525-build20201218-6) focal; urgency=medium
 
   * Release.

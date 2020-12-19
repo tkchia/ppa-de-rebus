@@ -9,6 +9,7 @@ Homepage: https://github.com/j6-uefi-headers
 Package: j6-uefi-headers
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: g++-mingw-w64-x86-64
 Description: j6 UEFI headers
  Custom C++ headers for interfacing with the Unified Extensible Firmware
  Interface (UEFI), by Justin Miller.

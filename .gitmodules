@@ -24,3 +24,6 @@
 [submodule "j6-uefi-headers/j6-uefi-headers-src"]
 	path = j6-uefi-headers/j6-uefi-headers-src
 	url = https://github.com/justinian/j6-uefi-headers.git
+[submodule "pycparserext/pycparserext-src"]
+	path = pycparserext/pycparserext-src
+	url = https://github.com/inducer/pycparserext.git

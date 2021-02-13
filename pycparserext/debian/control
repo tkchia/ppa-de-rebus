@@ -1,0 +1,36 @@
+Source: pycparserext
+Section: python
+Priority: optional
+Maintainer: TK Chia <tkchia@users.noreply.github.com>
+Build-Depends:
+ debhelper (>= 11),
+ dh-python (>= 1.20140511),
+ python-all,
+ python-setuptools,
+ python-pytest,
+ python-pycparser,
+ python3-all,
+ python3-setuptools,
+ python3-pytest,
+ python3-pycparser
+Standards-Version: 4.2.1
+Homepage: https://github.com/inducer/pycparserext
+Rules-Requires-Root: no
+
+Package: python-pycparserext
+Architecture: all
+Depends: ${misc:Depends}, ${python-pycparser:Depends}, ${python:Depends}
+Suggests: cpp
+Description: C parser in Python, with support for GNU extensions and OpenCL
+ pycparserext extends the pycparser C language parser to add support for GNU
+ extensions and OpenCL.
+
+Package: python3-pycparserext
+Architecture: all
+Depends: ${misc:Depends}, ${python3-pycparser:Depends}, ${python3:Depends}
+Suggests: cpp
+Description: C parser in Python 3, with support for GNU extensions and OpenCL
+ pycparserext extends the pycparser C language parser to add support for GNU
+ extensions and OpenCL.
+ .
+ This package contains the Python 3 version.

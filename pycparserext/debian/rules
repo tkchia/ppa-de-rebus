@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+
+export PYBUILD_DESTDIR_python2=debian/python-pycparserext
+export PYBUILD_DESTDIR_python3=debian/python3-pycparserext
+export PYBUILD_TEST_ARGS={dir}/test
+export PYBUILD_AFTER_TEST=rm -f {build_dir}/parser.out {build_dir}/lextab.py {build_dir}/yacctab.py
+export PYBUILD_SYSTEM=distutils
+
+%:
+	dh $@ --with python2,python3 --buildsystem pybuild \
+	    --sourcedirectory pycparserext-src

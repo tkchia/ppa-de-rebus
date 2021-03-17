@@ -1,0 +1,44 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+ifneq "" "$(wildcard ack-compiler-src/Makefile)"
+    SRCDIR ?= $(abspath ack-compiler-src)
+    COPY_DOCS ?= true
+else
+    SRCDIR ?= $(abspath .)
+    COPY_DOCS ?= false
+endif
+BUILDDIR = $(abspath build)
+DESTDIR ?= $(abspath debian/ack-compiler)
+PREFIX ?= /usr
+
+%:
+	exec dh $@
+
+override_dh_auto_clean:
+	$(MAKE) -C '$(SRCDIR)' BUILDDIR='$(BUILDDIR)' clean
+
+override_dh_auto_configure:
+	# Take this chance to copy out the documentation files...
+	if $(COPY_DOCS); then \
+		cp -a '$(SRCDIR)'/README '$(SRCDIR)'/Copyright \
+		      '$(SRCDIR)'/CHANGES .; \
+	fi
+
+override_dh_auto_build:
+	$(MAKE) -C '$(SRCDIR)' BUILDDIR='$(BUILDDIR)' PREFIX='$(PREFIX)'
+
+override_dh_strip:
+	# Do not try to strip the library files or example programs which
+	# were (cross-)compiled by ACK.
+	dh_strip -X.a -X.cpm -X.linux386 -X.linux68k -X.linuxmips \
+		 -X.linuxppc -X.osx386 -X.osxppc -X.pc86 -X.pdpv7
+
+override_dh_auto_install:
+	$(MAKE) -C '$(SRCDIR)' BUILDDIR='$(BUILDDIR)' \
+			       PREFIX='$(DESTDIR)$(PREFIX)' install
+	# The name `ack' conflicts with a program of the same name in stock
+	# Ubuntu's `ack-grep' package.  Do a rename to avert the conflict.
+	mv '$(DESTDIR)$(PREFIX)/bin/ack' '$(DESTDIR)$(PREFIX)/bin/ack-cc'
+	mv '$(DESTDIR)$(PREFIX)/share/man/man1/ack.1' \
+	   '$(DESTDIR)$(PREFIX)/share/man/man1/ack-cc.1'

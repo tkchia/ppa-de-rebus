@@ -1,0 +1,16 @@
+Source: ack-compiler
+Section: devel
+Priority: optional
+Maintainer: TK Chia <tkchia@users.noreply.github.com>
+Build-Depends: debhelper (>= 11), gcc (>= 4.5), libc6-dev (>= 2), ninja-build,
+ flex, bison
+Standards-Version: 3.9.6
+Homepage: https://github.com/davidgiven/ack
+
+Package: ack-compiler
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Amsterdam Compiler Kit
+ A tiny cross-platform compiler and toolchain suite for C, Pascal and other
+ languages, originally made famous by Minix.  By Andrew Tanenbaum and Ceriel
+ Jacobs of the Vrije Universiteit Amsterdam, and others.

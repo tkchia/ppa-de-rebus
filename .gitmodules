@@ -27,3 +27,7 @@
 [submodule "pycparserext/pycparserext-src"]
 	path = pycparserext/pycparserext-src
 	url = https://github.com/inducer/pycparserext.git
+[submodule "ack-compiler/ack-compiler-src"]
+	path = ack-compiler/ack-compiler-src
+	url = https://github.com/davidgiven/ack.git
+	branch = default

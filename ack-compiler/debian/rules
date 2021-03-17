@@ -11,6 +11,7 @@ endif
 BUILDDIR = $(abspath build)
 DESTDIR ?= $(abspath debian/ack-compiler)
 PREFIX ?= /usr
+INSTALL = install -c
 
 %:
 	exec dh $@
@@ -37,8 +38,14 @@ override_dh_strip:
 override_dh_auto_install:
 	$(MAKE) -C '$(SRCDIR)' BUILDDIR='$(BUILDDIR)' \
 			       PREFIX='$(DESTDIR)$(PREFIX)' install
+	mkdir -p '$(DESTDIR)$(PREFIX)/libexec/ack-compiler'
 	# The name `ack' conflicts with a program of the same name in stock
-	# Ubuntu's `ack-grep' package.  Do a rename to avert the conflict.
-	mv '$(DESTDIR)$(PREFIX)/bin/ack' '$(DESTDIR)$(PREFIX)/bin/ack-cc'
+	# Ubuntu's `ack-grep' package.  Try to avert the conflict --- use
+	# the name `ack-cc'.  However, also make sure that the ACK front-end
+	# is ultimately invoked under the name `ack', because ACK's internal
+	# workings kind of depend on that.
+	mv '$(DESTDIR)$(PREFIX)/bin/ack' \
+	   '$(DESTDIR)$(PREFIX)/libexec/ack-compiler/ack'
+	$(INSTALL) ack-cc '$(DESTDIR)$(PREFIX)/bin/ack-cc'
 	mv '$(DESTDIR)$(PREFIX)/share/man/man1/ack.1' \
 	   '$(DESTDIR)$(PREFIX)/share/man/man1/ack-cc.1'

@@ -7,7 +7,7 @@ Copyright: 1987-2005 Vrije Universiteit Amsterdam
  2005-2020 David Given et al.
 License: BSD-3-Clause
 
-Files: debian/*
+Files: ack-cc debian/*
 Copyright: 2021 TK Chia
 License: BSD-3-Clause
 

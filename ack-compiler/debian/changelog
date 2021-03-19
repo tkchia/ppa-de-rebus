@@ -1,3 +1,11 @@
+ack-compiler (1:6.0~pre5-20210318-build20210319-2) focal; urgency=medium
+
+  * Bump to 18 Mar 2021 version.
+  * Place actual `ack' binary in /usr/lib/ack/, along with other ACK
+    middle-end and back-end programs, rather than /usr/libexec/ack-compiler/.
+
+ -- user <user@localhost.localdomain>  Fri, 19 Mar 2021 18:36:46 +0000
+
 ack-compiler (1:6.0~pre5-20210316-build20210317-2) focal; urgency=medium
 
   * Release.

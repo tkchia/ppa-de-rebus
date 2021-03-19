@@ -1,2 +1,2 @@
 #!/bin/sh
-exec "`dirname "$0"`"/../libexec/ack-compiler/ack ${1+"$@"}
+exec "`dirname "$0"`"/../lib/ack/ack ${1+"$@"}

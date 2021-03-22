@@ -3,7 +3,7 @@ Section: devel
 Priority: optional
 Maintainer: TK Chia <tkchia@users.noreply.github.com>
 Build-Depends: debhelper (>= 11), gcc (>= 4.5), libc6-dev (>= 2), ninja-build,
- flex, bison
+ flex, bison, groff
 Standards-Version: 3.9.6
 Homepage: https://github.com/davidgiven/ack
 

@@ -12,6 +12,7 @@ BUILDDIR = $(abspath build)
 DESTDIR ?= $(abspath debian/ack-compiler)
 PREFIX ?= /usr
 INSTALL = install -c
+INSTALL_DATA = $(INSTALL) -m 0644
 
 %:
 	exec dh $@
@@ -28,6 +29,23 @@ override_dh_auto_configure:
 
 override_dh_auto_build:
 	$(MAKE) -C '$(SRCDIR)' BUILDDIR='$(BUILDDIR)' PREFIX='$(PREFIX)'
+	# Build documentation files from $(SRCDIR)/doc/*.doc .
+	mkdir -p '$(BUILDDIR)/doc'
+	ln -s '$(SRCDIR)/doc/Makefile' '$(BUILDDIR)/doc/Makefile'
+	set -e -x; \
+	for f in '$(SRCDIR)/doc'/*.doc; do \
+		b="`basename "$$f"`"; \
+		$(MAKE) -f '$(SRCDIR)/doc/proto.make' \
+		    SRC_HOME='$(SRCDIR)' TARGET_HOME='$(BUILDDIR)' \
+		    '$(BUILDDIR)/doc'/"$$b"; \
+	done
+	set -e -x; \
+	cd '$(BUILDDIR)/doc'; \
+	for f in *.doc; do \
+		n="`basename "$$f" .doc`"; \
+		$(MAKE) "$$n".dit; \
+		grops "$$n".dit >"$$n".ps; \
+	done
 
 override_dh_strip:
 	# Do not try to strip the library files or example programs which
@@ -47,3 +65,7 @@ override_dh_auto_install:
 	$(INSTALL) ack-cc '$(DESTDIR)$(PREFIX)/bin/ack-cc'
 	mv '$(DESTDIR)$(PREFIX)/share/man/man1/ack.1' \
 	   '$(DESTDIR)$(PREFIX)/share/man/man1/ack-cc.1'
+	# Install documentation files built from $(SRCDIR)/doc/*.doc .
+	$(INSTALL) -d '$(DESTDIR)$(PREFIX)/share/doc/ack-compiler'
+	$(INSTALL_DATA) '$(BUILDDIR)/doc'/*.ps \
+			'$(DESTDIR)$(PREFIX)/share/doc/ack-compiler'

@@ -1,3 +1,17 @@
+ack-compiler (1:6.0~pre5-20210320-build20210322-3) focal; urgency=medium
+
+  * Run needed roff preprocessors for doc/*.doc .
+
+ -- user <user@localhost.localdomain>  Mon, 22 Mar 2021 15:27:16 +0000
+
+ack-compiler (1:6.0~pre5-20210320-build20210320-1) focal; urgency=medium
+
+  * Bump to 20 Mar 2021 version.
+  * Build and install documentation files from doc/*.doc .  (The
+    documentation in doc/'s subdirectories may come later.)
+
+ -- user <user@localhost.localdomain>  Sat, 20 Mar 2021 18:06:46 +0000
+
 ack-compiler (1:6.0~pre5-20210318-build20210319-2) focal; urgency=medium
 
   * Bump to 18 Mar 2021 version.

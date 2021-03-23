@@ -1,3 +1,9 @@
+ack-compiler (1:6.0~pre5-20210320-build20210323-1) focal; urgency=medium
+
+  * Build documentation for CEG, EGO, EM Interpreter, and Lint.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Tue, 23 Mar 2021 15:57:39 +0000
+
 ack-compiler (1:6.0~pre5-20210320-build20210322-3) focal; urgency=medium
 
   * Run needed roff preprocessors for doc/*.doc .

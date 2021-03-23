@@ -40,6 +40,14 @@ override_dh_auto_build:
 		    '$(BUILDDIR)/doc'/"$$b"; \
 	done
 	set -e -x; \
+	for n in ceg ego int lint; do \
+		if [ -f '$(SRCDIR)/doc'/"$$n"/proto.make ]; then \
+			$(MAKE) -f '$(SRCDIR)/doc'/"$$n"/proto.make \
+			    SRC_HOME='$(SRCDIR)' TARGET_HOME='$(BUILDDIR)' \
+			    '$(BUILDDIR)/doc'/"$$n".doc; \
+		fi; \
+	done
+	set -e -x; \
 	cd '$(BUILDDIR)/doc'; \
 	for f in *.doc; do \
 		n="`basename "$$f" .doc`"; \

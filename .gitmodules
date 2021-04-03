@@ -31,3 +31,6 @@
 	path = ack-compiler/ack-compiler-src
 	url = https://github.com/davidgiven/ack.git
 	branch = default
+[submodule "exomizer/exomizer-src"]
+	path = exomizer/exomizer-src
+	url = https://github.com/tkchia/exomizer

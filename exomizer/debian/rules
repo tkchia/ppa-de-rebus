@@ -1,0 +1,39 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+ifneq "" "$(wildcard exomizer-src/src/Makefile)"
+    SRCDIR ?= $(abspath exomizer-src)
+    COPY_DOCS ?= true
+else
+    SRCDIR ?= $(abspath .)
+    COPY_DOCS ?= false
+endif
+DESTDIR ?= $(abspath debian/exomizer)
+PREFIX ?= /usr
+INSTALL = install -c
+
+%:
+	exec dh $@
+
+override_dh_auto_clean:
+	if [ -d build ]; \
+		then $(RM) -r build; fi
+
+override_dh_auto_configure:
+	# Take this chance to copy out the documentation files...
+	if $(COPY_DOCS); \
+		then cp -a '$(SRCDIR)'/*.txt .; fi
+
+override_dh_auto_build:
+	mkdir -p build
+	cd build && \
+	    ln -s '$(SRCDIR)'/src/*.[chs] .
+	cd build && \
+	    make VPATH='$(SRCDIR)'/src -f '$(SRCDIR)'/src/Makefile
+
+override_dh_auto_test:
+	# Unimplemented.
+
+override_dh_auto_install:
+	$(INSTALL) -d '$(DESTDIR)$(PREFIX)'/bin
+	$(INSTALL) build/exomizer build/exobasic '$(DESTDIR)$(PREFIX)'/bin

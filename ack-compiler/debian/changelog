@@ -1,3 +1,9 @@
+ack-compiler (1:6.0~pre5-20210320-msdos20210401-build20210406-2) focal; urgency=medium
+
+  * Build documentation for ACK Target Optimizer.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Tue, 06 Apr 2021 16:37:27 +0000
+
 ack-compiler (1:6.0~pre5-20210320-msdos20210401-build20210406-1) focal; urgency=medium
 
   * Install additional man pages from man/*.6, man/*.7 .

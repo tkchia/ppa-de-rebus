@@ -42,7 +42,7 @@ override_dh_auto_build:
 		    '$(BUILD1DIR)/doc'/"$$b"; \
 	done
 	set -e -x; \
-	for n in ceg ego int lint LLgen LLgen_NCER; do \
+	for n in ceg ego int lint LLgen LLgen_NCER top; do \
 		case "$$n" in \
 		    LLgen_NCER)	d=LLgen;; \
 		    *)		d="$$n";; \

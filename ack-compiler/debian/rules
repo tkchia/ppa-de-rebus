@@ -81,10 +81,17 @@ override_dh_auto_install:
 	$(INSTALL) ack-cc '$(DEST1DIR)$(PREFIX)/bin/ack-cc'
 	mv '$(DEST1DIR)$(PREFIX)/share/man/man1/ack.1' \
 	   '$(DEST1DIR)$(PREFIX)/share/man/man1/ack-cc.1'
-	# Install documentation files built from $(SRC1DIR)/doc/*.doc .
-	$(INSTALL) -d '$(DEST1DIR)$(PREFIX)/share/doc/ack-compiler'
+	# Install documentation files built from $(SRC1DIR)/doc/*.doc , and
+	# man pages in $(SRC1DIR)/man/* .
+	$(INSTALL) -d '$(DEST1DIR)$(PREFIX)/share/doc/ack-compiler' \
+		      '$(DEST1DIR)$(PREFIX)/share/man/man6' \
+		      '$(DEST1DIR)$(PREFIX)/share/man/man7'
 	$(INSTALL_DATA) '$(BUILD1DIR)/doc'/*.ps \
 			'$(DEST1DIR)$(PREFIX)/share/doc/ack-compiler'
+	$(INSTALL_DATA) '$(SRC1DIR)/man'/*.6 \
+			'$(DEST1DIR)$(PREFIX)/share/man/man6'
+	$(INSTALL_DATA) '$(SRC1DIR)/man'/*.7 \
+			'$(DEST1DIR)$(PREFIX)/share/man/man7'
 	# Tidy up files for the `msdos86' target.  The changes needed for
 	# the platform-dependent header files to support MS-DOS text and
 	# binary file modes are not yet in mainline ACK, so for now move the

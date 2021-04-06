@@ -1,3 +1,9 @@
+ack-compiler (1:6.0~pre5-20210320-msdos20210401-build20210406-1) focal; urgency=medium
+
+  * Install additional man pages from man/*.6, man/*.7 .
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Tue, 06 Apr 2021 14:03:36 +0000
+
 ack-compiler (1:6.0~pre5-20210320-msdos20210401-build20210402-4) focal; urgency=medium
 
   * Add new package for my experimental `msdos86' target support.

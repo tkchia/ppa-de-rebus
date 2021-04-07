@@ -1,3 +1,9 @@
+ack-compiler (1:6.0~pre5-20210320-msdos20210401-build20210407-1) focal; urgency=medium
+
+  * Build documentation for Pascal compiler and SPARC back-end.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Wed, 07 Apr 2021 10:44:41 +0000
+
 ack-compiler (1:6.0~pre5-20210320-msdos20210401-build20210406-2) focal; urgency=medium
 
   * Build documentation for ACK Target Optimizer.

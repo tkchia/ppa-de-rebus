@@ -1,12 +1,9 @@
 #!/usr/bin/make -f
 
 export DH_VERBOSE = 1
-SRC1DIR ?= $(abspath ack-compiler-src)
-SRC2DIR ?= $(abspath ack-compiler-msdos86-src)
-BUILD1DIR = $(abspath build1)
-BUILD2DIR = $(abspath build2)
-DEST1DIR ?= $(abspath debian/ack-compiler)
-DEST2DIR ?= $(abspath debian/ack-compiler-msdos86)
+SRCDIR ?= $(abspath ack-compiler-src)
+BUILDDIR = $(abspath build1)
+DESTDIR ?= $(abspath debian/ack-compiler)
 PREFIX ?= /usr
 INSTALL = install -c
 INSTALL_DATA = $(INSTALL) -m 0644
@@ -15,31 +12,24 @@ INSTALL_DATA = $(INSTALL) -m 0644
 	exec dh $@
 
 override_dh_auto_clean:
-	if [ -d '$(SRC1DIR)' ]; \
-		then $(MAKE) -C '$(SRC1DIR)' BUILDDIR='$(BUILD1DIR)' clean; fi
-	if [ -d '$(SRC2DIR)' ]; \
-		then $(MAKE) -C '$(SRC2DIR)' BUILDDIR='$(BUILD2DIR)' clean; fi
+	if [ -d '$(SRCDIR)' ]; \
+		then $(MAKE) -C '$(SRCDIR)' BUILDDIR='$(BUILDDIR)' clean; fi
 
 override_dh_auto_configure:
 	# Take this chance to copy out the documentation files...
-	cp -a '$(SRC1DIR)'/README '$(SRC1DIR)'/Copyright '$(SRC1DIR)'/CHANGES .
-	# ...and to create a patched directory tree for the `msdos86' build.
-	cp -a '$(SRC1DIR)' '$(SRC2DIR)'
-	patch -d '$(SRC2DIR)' -p1 <ack-msdos86.20210401.diff
+	cp -a '$(SRCDIR)'/README '$(SRCDIR)'/Copyright '$(SRCDIR)'/CHANGES .
 
 override_dh_auto_build:
-	$(MAKE) -C '$(SRC1DIR)' BUILDDIR='$(BUILD1DIR)' PREFIX='$(PREFIX)'
-	$(MAKE) -C '$(SRC2DIR)' BUILDDIR='$(BUILD2DIR)' PREFIX='$(PREFIX)' \
-		plat/msdos86+pkg
-	# Build documentation files from $(SRC1DIR)/doc/*.doc .
-	mkdir -p '$(BUILD1DIR)/doc'
-	ln -s '$(SRC1DIR)/doc/Makefile' '$(BUILD1DIR)/doc/Makefile'
+	$(MAKE) -C '$(SRCDIR)' BUILDDIR='$(BUILDDIR)' PREFIX='$(PREFIX)'
+	# Build documentation files from $(SRCDIR)/doc/*.doc .
+	mkdir -p '$(BUILDDIR)/doc'
+	ln -s '$(SRCDIR)/doc/Makefile' '$(BUILDDIR)/doc/Makefile'
 	set -e -x; \
-	for f in '$(SRC1DIR)/doc'/*.doc; do \
+	for f in '$(SRCDIR)/doc'/*.doc; do \
 		b="`basename "$$f"`"; \
-		$(MAKE) -f '$(SRC1DIR)/doc/proto.make' \
-		    SRC_HOME='$(SRC1DIR)' TARGET_HOME='$(BUILD1DIR)' \
-		    '$(BUILD1DIR)/doc'/"$$b"; \
+		$(MAKE) -f '$(SRCDIR)/doc/proto.make' \
+		    SRC_HOME='$(SRCDIR)' TARGET_HOME='$(BUILDDIR)' \
+		    '$(BUILDDIR)/doc'/"$$b"; \
 	done
 	set -e -x; \
 	for n in ceg ego int lint LLgen LLgen_NCER pascal sparc top; do \
@@ -47,14 +37,14 @@ override_dh_auto_build:
 		    LLgen_NCER)	d=LLgen;; \
 		    *)		d="$$n";; \
 		esac; \
-		if [ -f '$(SRC1DIR)/doc'/"$$d"/proto.make ]; then \
-			$(MAKE) -f '$(SRC1DIR)/doc'/"$$d"/proto.make \
-			    SRC_HOME='$(SRC1DIR)' TARGET_HOME='$(BUILD1DIR)' \
-			    '$(BUILD1DIR)/doc'/"$$n".doc; \
+		if [ -f '$(SRCDIR)/doc'/"$$d"/proto.make ]; then \
+			$(MAKE) -f '$(SRCDIR)/doc'/"$$d"/proto.make \
+			    SRC_HOME='$(SRCDIR)' TARGET_HOME='$(BUILDDIR)' \
+			    '$(BUILDDIR)/doc'/"$$n".doc; \
 		fi; \
 	done
 	set -e -x; \
-	cd '$(BUILD1DIR)/doc'; \
+	cd '$(BUILDDIR)/doc'; \
 	for f in *.doc; do \
 		n="`basename "$$f" .doc`"; \
 		$(MAKE) "$$n".dit; \
@@ -68,45 +58,26 @@ override_dh_strip:
 		 -X.linuxppc -X.osx386 -X.osxppc -X.pc86 -X.msdos86 -X.pdpv7
 
 override_dh_auto_install:
-	$(MAKE) -C '$(SRC1DIR)' BUILDDIR='$(BUILD1DIR)' \
-			       PREFIX='$(DEST1DIR)$(PREFIX)' install
-	$(MAKE) -C '$(SRC2DIR)' BUILDDIR='$(BUILD2DIR)' \
-			       PREFIX='$(DEST2DIR)$(PREFIX)' install
+	$(MAKE) -C '$(SRCDIR)' BUILDDIR='$(BUILDDIR)' \
+			       PREFIX='$(DESTDIR)$(PREFIX)' install
 	# The name `ack' conflicts with a program of the same name in stock
 	# Ubuntu's `ack-grep' package.  Try to avert the conflict --- use
 	# the name `ack-cc'.  However, also make sure that the ACK front-end
 	# is ultimately invoked under the name `ack', because ACK's internal
 	# workings kind of depend on that.
-	mv '$(DEST1DIR)$(PREFIX)/bin/ack' '$(DEST1DIR)$(PREFIX)/lib/ack/ack'
-	$(INSTALL) ack-cc '$(DEST1DIR)$(PREFIX)/bin/ack-cc'
-	mv '$(DEST1DIR)$(PREFIX)/share/man/man1/ack.1' \
-	   '$(DEST1DIR)$(PREFIX)/share/man/man1/ack-cc.1'
-	# Install documentation files built from $(SRC1DIR)/doc/*.doc , and
-	# man pages in $(SRC1DIR)/man/* .
-	$(INSTALL) -d '$(DEST1DIR)$(PREFIX)/share/doc/ack-compiler' \
-		      '$(DEST1DIR)$(PREFIX)/share/man/man6' \
-		      '$(DEST1DIR)$(PREFIX)/share/man/man7'
-	$(INSTALL_DATA) '$(BUILD1DIR)/doc'/*.ps \
-			'$(DEST1DIR)$(PREFIX)/share/doc/ack-compiler'
-	$(INSTALL_DATA) '$(SRC1DIR)/man'/*.6 \
-			'$(DEST1DIR)$(PREFIX)/share/man/man6'
-	$(INSTALL_DATA) '$(SRC1DIR)/man'/*.7 \
-			'$(DEST1DIR)$(PREFIX)/share/man/man7'
-	# Tidy up files for the `msdos86' target.  The changes needed for
-	# the platform-dependent header files to support MS-DOS text and
-	# binary file modes are not yet in mainline ACK, so for now move the
-	# changed files out of the way, into the platform-specific
-	# directory.  Also remove unneeded files not specific to `msdos86',
-	# and install an `ack-ms86' script.
-	mv '$(DEST2DIR)$(PREFIX)'/share/ack/include/ansi/ack/config.h \
-	   '$(DEST2DIR)$(PREFIX)'/share/ack/include/ansi/ack/emufile.h \
-	   '$(DEST2DIR)$(PREFIX)'/share/ack/msdos86/include/ack/
-	mv '$(DEST2DIR)$(PREFIX)'/share/ack/include/ansi/unistd.h \
-	   '$(DEST2DIR)$(PREFIX)'/share/ack/msdos86/include/
-	$(RM) -r '$(DEST2DIR)$(PREFIX)'/share/ack/descr/[^m]* \
-		 '$(DEST2DIR)$(PREFIX)'/share/ack/include \
-		 '$(DEST2DIR)$(PREFIX)'/share/ack/ego \
-		 '$(DEST2DIR)$(PREFIX)'/share/man \
-		 '$(DEST2DIR)$(PREFIX)'/bin/* \
-		 '$(DEST2DIR)$(PREFIX)'/lib/ack/[^m]*
-	$(INSTALL) ack-ms86 '$(DEST2DIR)$(PREFIX)/bin/ack-ms86'
+	mv '$(DESTDIR)$(PREFIX)/bin/ack' '$(DESTDIR)$(PREFIX)/lib/ack/ack'
+	$(INSTALL) ack-cc '$(DESTDIR)$(PREFIX)/bin/ack-cc'
+	$(INSTALL) ack-ms86 '$(DESTDIR)$(PREFIX)/bin/ack-ms86'
+	mv '$(DESTDIR)$(PREFIX)/share/man/man1/ack.1' \
+	   '$(DESTDIR)$(PREFIX)/share/man/man1/ack-cc.1'
+	# Install documentation files built from $(SRCDIR)/doc/*.doc , and
+	# man pages in $(SRCDIR)/man/* .
+	$(INSTALL) -d '$(DESTDIR)$(PREFIX)/share/doc/ack-compiler' \
+		      '$(DESTDIR)$(PREFIX)/share/man/man6' \
+		      '$(DESTDIR)$(PREFIX)/share/man/man7'
+	$(INSTALL_DATA) '$(BUILDDIR)/doc'/*.ps \
+			'$(DESTDIR)$(PREFIX)/share/doc/ack-compiler'
+	$(INSTALL_DATA) '$(SRCDIR)/man'/*.6 \
+			'$(DESTDIR)$(PREFIX)/share/man/man6'
+	$(INSTALL_DATA) '$(SRCDIR)/man'/*.7 \
+			'$(DESTDIR)$(PREFIX)/share/man/man7'

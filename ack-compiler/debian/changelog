@@ -1,3 +1,9 @@
+ack-compiler (1:6.0~pre5-20210413-build20210414-1) focal; urgency=medium
+
+  * Bump to 13 Apr 2021 version.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Wed, 14 Apr 2021 17:38:09 +0000
+
 ack-compiler (1:6.0~pre5-20210320-msdos20210401-build20210407-1) focal; urgency=medium
 
   * Build documentation for Pascal compiler and SPARC back-end.

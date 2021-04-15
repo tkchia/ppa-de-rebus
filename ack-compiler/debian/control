@@ -10,7 +10,6 @@ Homepage: https://github.com/davidgiven/ack
 Package: ack-compiler
 Architecture: any
 Depends: coreutils, ${shlibs:Depends}, ${misc:Depends}
-Homepage: https://github.com/davidgiven/ack
 Description: Amsterdam Compiler Kit
  A tiny cross-platform compiler and toolchain suite for C, Pascal and other
  languages, originally made famous by Minix.  By Andrew Tanenbaum and Ceriel
@@ -20,10 +19,9 @@ Package: ack-compiler-msdos86
 Architecture: any
 Depends: ack-compiler, coreutils, ${shlibs:Depends}, ${misc:Depends}
 Enhances: ack-compiler
-Homepage: https://github.com/tkchia/ack/tree/tkchia/msdos86
-Description: MS-DOS target platform support for Amsterdam Compiler Kit
- Experimental runtime library and support files for compiling programs for
- MS-DOS using the Amsterdam Compiler Kit.
+Description: MS-DOS target support for Amsterdam Compiler Kit (stub package)
+ This is a dummy dependency package providing MS-DOS target platform support
+ for the Amsterdam Compiler Kit.
  .
  ACK is a tiny cross-platform compiler and toolchain suite for C, Pascal and
  other languages, originally made famous by Minix.

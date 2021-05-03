@@ -32,14 +32,25 @@ override_dh_auto_build:
 		    '$(BUILDDIR)/doc'/"$$b"; \
 	done
 	set -e -x; \
-	for n in ceg ego int lint LLgen LLgen_NCER pascal sparc top; do \
+	for n in ceg ego em int lint LLgen LLgen_NCER pascal sparc top; do \
 		case "$$n" in \
-		    LLgen_NCER)	d=LLgen;; \
-		    *)		d="$$n";; \
+		    LLgen_NCER) \
+			d=LLgen;; \
+		    em) \
+			d=em; \
+			mkdir -p '$(SRCDIR)/doc/em/etc' '$(SRCDIR)/lib.bin'; \
+			ln -s '$(BUILDDIR)/obj/modules/src/em_data/lib/lib.a'\
+			      '$(SRCDIR)/lib.bin/em_data.a';; \
+		    *) \
+			d="$$n";; \
 		esac; \
 		if [ -f '$(SRCDIR)/doc'/"$$d"/proto.make ]; then \
+			PATH='$(abspath .)':"$$PATH" \
 			$(MAKE) -f '$(SRCDIR)/doc'/"$$d"/proto.make \
 			    SRC_HOME='$(SRCDIR)' TARGET_HOME='$(BUILDDIR)' \
+			    UTIL_HOME='$(SRCDIR)' USUF=o ULIBSUF=a \
+			    UCC='$(CC) '` \
+				`'-I$(BUILDDIR)/obj/modules/src/em_data/lib' \
 			    '$(BUILDDIR)/doc'/"$$n".doc; \
 		fi; \
 	done

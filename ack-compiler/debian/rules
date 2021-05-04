@@ -18,6 +18,8 @@ override_dh_auto_clean:
 override_dh_auto_configure:
 	# Take this chance to copy out the documentation files...
 	cp -a '$(SRCDIR)'/README '$(SRCDIR)'/Copyright '$(SRCDIR)'/CHANGES .
+	# ...and apply patches.
+	patch -p1 -d '$(SRCDIR)' <20210504.patch
 
 override_dh_auto_build:
 	$(MAKE) -C '$(SRCDIR)' BUILDDIR='$(BUILDDIR)' PREFIX='$(PREFIX)'

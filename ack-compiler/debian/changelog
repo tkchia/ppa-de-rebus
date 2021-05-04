@@ -1,3 +1,9 @@
+ack-compiler (1:6.0~pre5-20210426-build20210504-1) focal; urgency=medium
+
+  * Locally fix a glitch in the EM documentation sources.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Tue, 04 May 2021 16:16:07 +0000
+
 ack-compiler (1:6.0~pre5-20210426-build20210503-2) focal; urgency=medium
 
   * Build documentation for EM.

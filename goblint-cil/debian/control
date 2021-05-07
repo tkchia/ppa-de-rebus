@@ -1,0 +1,31 @@
+Source: goblint-cil
+Section: ocaml
+Priority: optional
+Maintainer: TK Chia <tkchia@users.noreply.github.com>
+Build-Depends:
+ debhelper (>= 11),
+ perl,
+ ocamlbuild,
+ ocaml-nox,
+ ocaml-findlib,
+ libbatteries-ocaml-dev,
+ libfindlib-ocaml-dev,
+ libzarith-ocaml-dev,
+ libppx-deriving-yojson-ocaml-dev,
+ libyojson-ocaml-dev
+Standards-Version: 4.2.1
+Homepage: https://github.com/goblint/cil
+Rules-Requires-Root: no
+
+Package: goblint-cil
+Architecture: all
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ perl,
+ ocaml-nox,
+ ocaml-findlib
+Suggests: gcc
+Description: C Intermediate Language (CIL), Goblint fork
+ Fork of the C Intermediate Language (CIL) front-end for C program analysis
+ and transformation, by UC Berkeley and the Technische Universität München.

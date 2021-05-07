@@ -1,0 +1,7 @@
+diff --git a/src/ext/makecfg/META b/src/ext/makecfg/META
+index 3fa9c5d9..3f870b1d 100644
+--- a/src/ext/makecfg/META
++++ b/src/ext/makecfg/META
+@@ -1,2 +1 @@
+-requires = "goblint-cil.makecfg"
+ description = "make the program look more like a CFG"

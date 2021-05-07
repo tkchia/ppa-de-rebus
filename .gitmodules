@@ -34,3 +34,7 @@
 [submodule "exomizer/exomizer-src"]
 	path = exomizer/exomizer-src
 	url = https://github.com/tkchia/exomizer
+[submodule "goblint-cil/goblint-cil-src"]
+	path = goblint-cil/goblint-cil-src
+	url = https://github.com/goblint/cil.git
+	branch = develop

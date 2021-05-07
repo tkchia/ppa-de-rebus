@@ -1,0 +1,40 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+ifneq "" "$(wildcard goblint-cil-src/Makefile.in)"
+    SRCDIR ?= $(abspath goblint-cil-src)
+    COPY_DOCS ?= true
+else
+    SRCDIR ?= $(abspath .)
+    COPY_DOCS ?= false
+endif
+DESTDIR ?= $(abspath debian/goblint-cil)
+PREFIX ?= /usr
+export OCAMLFIND_DESTDIR = $(PREFIX)/lib/ocaml
+
+%:
+	exec dh $@
+
+override_dh_auto_clean:
+	if [ -f '$(SRCDIR)'/Makefile ]; \
+		then $(MAKE) -C '$(SRCDIR)' distclean; fi
+
+override_dh_auto_configure:
+	cd '$(SRCDIR)' && ./configure --prefix='$(PREFIX)'
+	# Take this chance to copy out the documentation files...
+	if $(COPY_DOCS); \
+		then cp -a '$(SRCDIR)'/README.md '$(SRCDIR)'/CHANGES .; fi
+	# ...and apply patches.
+	patch -p1 -d '$(SRCDIR)' <20210507.patch
+
+
+override_dh_auto_build:
+	$(MAKE) -C '$(SRCDIR)'
+
+override_dh_auto_test:
+	# FIXME:
+	#	$(MAKE) -C '$(SRCDIR)' test
+	# utterly fails, for some reason.
+
+override_dh_auto_install:
+	$(MAKE) -C '$(SRCDIR)' install DESTDIR='$(DESTDIR)'

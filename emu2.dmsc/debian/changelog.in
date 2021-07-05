@@ -1,3 +1,9 @@
+emu2.dmsc (20200604-build20210705-1~@distro@) @distro@; urgency=medium
+
+  * Build for both Ubuntu Focal and Ubuntu Hirsute.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Mon, 05 Jul 2021 15:46:10 +0000
+
 emu2.dmsc (20200604-build20200714-2) focal; urgency=medium
 
   * Corrected copyright information for debian/* packaging files.

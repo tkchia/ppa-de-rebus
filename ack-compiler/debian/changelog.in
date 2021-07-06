@@ -1,3 +1,9 @@
+ack-compiler (1:6.0~pre5-20210426-build20210706-1~@distro@) @distro@; urgency=medium
+
+  * Build for both Ubuntu Focal and Ubuntu Hirsute.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Tue, 06 Jul 2021 11:13:50 +0000
+
 ack-compiler (1:6.0~pre5-20210426-build20210506-1) focal; urgency=medium
 
   * EM documentation fix is now upstreamed.

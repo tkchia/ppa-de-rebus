@@ -1,0 +1,11 @@
+exomizer (3.1.0-build20210707-1~@distro@) @distro@; urgency=medium
+
+  * Build for multiple Ubuntu distributions.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Wed, 07 Jul 2021 16:39:01 +0000
+
+exomizer (3.1.0-build20210403-3) focal; urgency=medium
+
+  * Release.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Sat, 03 Apr 2021 16:34:06 +0000

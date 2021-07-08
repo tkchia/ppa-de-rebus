@@ -1,3 +1,9 @@
+minx86dec (20200215-build20210708-1~@distro@) @distro@; urgency=medium
+
+  * Build for multiple Ubuntu distributions.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Thu, 08 Jul 2021 13:26:33 +0000
+
 minx86dec (20200215-build20200717-1) focal; urgency=medium
 
   * Corrected copyright information for debian/* packaging files.

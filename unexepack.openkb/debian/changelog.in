@@ -1,3 +1,9 @@
+unexepack.openkb (20130925-build20210708-1~@distro@) @distro@; urgency=medium
+
+  * Build for multiple Ubuntu distributions.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Thu, 08 Jul 2021 16:56:51 +0000
+
 unexepack.openkb (20130925-build20200714-1) focal; urgency=medium
 
   * Update maintainer address.

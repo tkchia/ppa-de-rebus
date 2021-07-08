@@ -1,3 +1,9 @@
+j6-uefi-headers (20200525-build20210708-1~@distro@) @distro@; urgency=medium
+
+  * Build for multiple Ubuntu distributions.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Thu, 08 Jul 2021 13:16:59 +0000
+
 j6-uefi-headers (20200525-build20201219-3) focal; urgency=medium
 
   * Bump sources to newer version.

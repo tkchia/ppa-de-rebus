@@ -1,0 +1,11 @@
+semblance (0.2-20200510-build20210709-1~@distro@) @distro@; urgency=medium
+
+  * Build for multiple Ubuntu distributions.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Fri, 09 Jul 2021 16:45:27 +0000
+
+semblance (0.2-20200510-build20200714-4) focal; urgency=medium
+
+  * Release.
+
+ -- TK Chia <tkchia@users.noreply.github.com>  Tue, 14 Jul 2020 06:30:47 +0000

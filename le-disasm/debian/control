@@ -1,0 +1,15 @@
+Source: le-disasm
+Section: devel
+Priority: optional
+Maintainer: TK Chia <tkchia@users.noreply.github.com>
+Build-Depends: debhelper (>= 9), quilt, g++ (>= 4.5), libstdc++-10-dev,
+ binutils-dev
+Standards-Version: 3.9.6
+Homepage: https://github.com/samunders-core/le-disasm
+
+Package: le-disasm
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Disassembler for linear executable (LE/LX) programs.
+ libopcodes-based (AT&T syntax) linear executable (MZ/LE/LX DOS EXEs)
+ disassembler modified from swdisasm.

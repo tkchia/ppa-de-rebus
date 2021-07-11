@@ -1,0 +1,33 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+ifneq "" "$(wildcard le-disasm-src/main.cpp)"
+    SRCDIR ?= $(abspath le-disasm-src)
+    COPY_DOCS ?= true
+else
+    SRCDIR ?= $(abspath .)
+    COPY_DOCS ?= false
+endif
+DESTDIR ?= $(abspath debian/le-disasm)
+
+%:
+	exec dh $@
+
+override_dh_auto_clean:
+	$(RM) -r build
+
+override_dh_auto_configure:
+	mkdir -p build
+	# Take this chance to copy out the documentation files...
+	if $(COPY_DOCS); \
+		then cp -a '$(SRCDIR)'/README.md '$(SRCDIR)'/LICENSE .; fi
+
+override_dh_auto_build:
+	g++ -O3 -Wall '$(SRCDIR)'/main.cpp -o build/le_disasm -lopcodes -lbfd
+
+override_dh_auto_test:
+	# Unimplemented.
+
+override_dh_auto_install:
+	install -d -m 755 '$(DESTDIR)'/usr/bin
+	install -c -m 755 build/le_disasm '$(DESTDIR)'/usr/bin/le_disasm

@@ -38,3 +38,6 @@
 	path = goblint-cil/goblint-cil-src
 	url = https://github.com/goblint/cil.git
 	branch = develop
+[submodule "le-disasm/le-disasm-src"]
+	path = le-disasm/le-disasm-src
+	url = https://github.com/samunders-core/le_disasm.git
